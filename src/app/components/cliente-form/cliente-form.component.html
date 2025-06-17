@@ -1,0 +1,39 @@
+<p-card [header]="isEditMode ? 'Editar Cliente' : 'Novo Cliente'" styleClass="mt-4">
+  
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+    <div class="p-fluid grid">
+      
+      <div class="field col-12 md:col-6">
+        <label for="nome">Nome Completo</label>
+        <input id="nome" type="text" pInputText formControlName="nome" />
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <label for="cpf">CPF</label>
+        <p-inputMask mask="999.999.999-99" id="cpf" formControlName="cpf" placeholder="000.000.000-00"></p-inputMask>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <label for="dataNascimento">Data de Nascimento</label>
+        <p-calendar id="dataNascimento" formControlName="dataNascimento" dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <label for="telefone">Telefone</label>
+        <p-inputMask mask="(99) 99999-9999" id="telefone" formControlName="telefone" placeholder="(00) 00000-0000"></p-inputMask>
+      </div>
+
+      <div class="field col-12">
+        <label for="endereco">Endereço</label>
+        <input id="endereco" type="text" pInputText formControlName="endereco" />
+      </div>
+
+    </div>
+
+    <div class="mt-4 flex justify-content-end">
+      <p-button label="Cancelar" styleClass="p-button-secondary" routerLink="/cliente-list" class="mr-2"></p-button>
+      <p-button [label]="isEditMode ? 'Atualizar' : 'Cadastrar'" type="submit" [disabled]="form.invalid"></p-button>
+    </div>
+
+  </form>
+</p-card>

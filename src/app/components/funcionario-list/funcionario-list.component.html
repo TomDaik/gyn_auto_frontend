@@ -1,1 +1,51 @@
-<p>funcionario-list works!</p>
+<div class="container mt-4">
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <h2 class="m-0">Lista de Funcionários</h2>
+    </div>
+    <div class="p-toolbar-group-end">
+      <p-button label="Novo Funcionário" icon="pi pi-plus" routerLink="/funcionario-form"></p-button>
+    </div>
+  </p-toolbar>
+
+  <p-card class="mt-4">
+    <p-table [value]="funcionarios" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+             currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+             [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-striped p-datatable-sm">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon></th>
+          <th>CPF</th>
+          <th pSortableColumn="cargo">Cargo <p-sortIcon field="cargo"></p-sortIcon></th>
+          <th pSortableColumn="salario">Salário <p-sortIcon field="salario"></p-sortIcon></th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-funcionario>
+        <tr>
+          <td>{{ funcionario.id }}</td>
+          <td>{{ funcionario.nome }}</td>
+          <td>{{ funcionario.cpf }}</td>
+          <td>{{ funcionario.cargo }}</td>
+          <td>{{ funcionario.salario | currency:'BRL' }}</td>
+          <td>
+            <p-button icon="pi pi-pencil" styleClass="p-button-text p-button-info" 
+                      (click)="editarFuncionario(funcionario.id)" pTooltip="Editar Funcionário" tooltipPosition="top"></p-button>
+
+            <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger" 
+                      (click)="excluirFuncionario(funcionario.id)" pTooltip="Excluir Funcionário" tooltipPosition="top"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6">Nenhum funcionário encontrado.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

@@ -1,0 +1,23 @@
+<div class="container mt-4">
+    <h2>{{ isEditMode ? 'Editar Serviço' : 'Novo Serviço' }}</h2>
+    <hr>
+  
+    <form [formGroup]="form" (ngSubmit)="salvar()">
+      <div class="mb-3">
+        <label for="descricao" class="form-label">Descrição do Serviço</label>
+        <input type="text" class="form-control" id="descricao" formControlName="descricao">
+      </div>
+  
+      <div class="mb-3">
+        <label for="valorUnitario" class="form-label">Valor Unitário (R$)</label>
+        <input type="number" class="form-control" id="valorUnitario" formControlName="valorUnitario" step="0.01">
+      </div>
+  
+      <div class="mt-4">
+        <button type="submit" class="btn btn-success me-2" [disabled]="form.invalid">
+          {{ isEditMode ? 'Atualizar' : 'Cadastrar' }}
+        </button>
+        <a routerLink="/servico-list" class="btn btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>

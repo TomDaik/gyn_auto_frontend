@@ -1,1 +1,110 @@
-<p>os-form works!</p>
+<div class="container mt-4">
+  <h2>Nova Ordem de Serviço</h2>
+  <hr>
+
+  <p-fieldset legend="Dados da OS" [toggleable]="true" class="mb-4">
+    <form [formGroup]="osForm">
+      <div class="p-fluid p-grid">
+        <div class="p-field p-col-12 p-md-6">
+          <label for="cliente">Cliente</label>
+          <p-dropdown id="cliente" [options]="clientes" formControlName="idCliente"
+                      optionLabel="nome" optionValue="id" placeholder="Selecione um cliente"
+                      [showClear]="true" [filter]="true" filterBy="nome"></p-dropdown>
+        </div>
+        <div class="p-field p-col-12 p-md-6">
+          <label for="veiculo">Veículo</label>
+          <p-dropdown id="veiculo" [options]="veiculosDoCliente" formControlName="idVeiculo"
+                      optionLabel="placa" optionValue="idVeiculo" placeholder="Selecione um veículo"
+                      [showClear]="true" [disabled]="!osForm.get('idCliente')?.value"></p-dropdown>
+        </div>
+        <div class="p-field p-col-12">
+          <label for="observacoes">Observações</label>
+          <textarea id="observacoes" pInputTextarea formControlName="observacoes" [autoResize]="true" rows="2"></textarea>
+        </div>
+      </div>
+    </form>
+  </p-fieldset>
+
+  <div class="p-grid">
+    <div class="p-col-12 p-lg-6">
+      <p-fieldset legend="Adicionar Serviço" [toggleable]="true" class="h-100">
+        <form [formGroup]="itemServicoForm">
+          <div class="p-field mb-3">
+            <label for="servico">Serviço</label>
+            <p-dropdown [options]="servicos" formControlName="idServico" optionLabel="descricao" optionValue="id"
+                        placeholder="Selecione um serviço" [filter]="true" filterBy="descricao"></p-dropdown>
+          </div>
+          <div class="p-field mb-3">
+            <label for="funcionario">Responsável</label>
+            <p-dropdown [options]="funcionarios" formControlName="idFuncionario" optionLabel="nome" optionValue="id"
+                        placeholder="Selecione um responsável" [filter]="true" filterBy="nome"></p-dropdown>
+          </div>
+          <p-button label="Adicionar Serviço" icon="pi pi-plus" styleClass="w-100" 
+                    (click)="adicionarServico()" [disabled]="itemServicoForm.invalid"></p-button>
+        </form>
+      </p-fieldset>
+    </div>
+    <div class="p-col-12 p-lg-6 mt-4 mt-lg-0">
+      <p-fieldset legend="Adicionar Peça" [toggleable]="true" class="h-100">
+        <form [formGroup]="itemPecaForm">
+          <div class="p-field mb-3">
+            <label for="peca">Peça</label>
+            <p-dropdown [options]="pecas" formControlName="idPeca" optionLabel="descricao" optionValue="id"
+                        placeholder="Selecione uma peça" [filter]="true" filterBy="descricao"></p-dropdown>
+          </div>
+          <div class="p-field mb-3">
+            <label for="quantidade">Quantidade</label>
+            <p-inputNumber inputId="quantidade" formControlName="quantidade" [min]="1"></p-inputNumber>
+          </div>
+          <p-button label="Adicionar Peça" icon="pi pi-plus" styleClass="w-100" 
+                    (click)="adicionarPeca()" [disabled]="itemPecaForm.invalid"></p-button>
+        </form>
+      </p-fieldset>
+    </div>
+  </div>
+
+  <hr class="my-4">
+  <h3>Itens da Ordem de Serviço</h3>
+  
+  <p-table [value]="itensServicoAdicionados" styleClass="p-datatable-sm" [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="caption">Serviços Adicionados</ng-template>
+    <ng-template pTemplate="header">
+      <tr><th>Descrição</th><th>Responsável</th><th>Valor</th><th>Ação</th></tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-i="rowIndex">
+      <tr>
+        <td>{{ item.descricaoServico }}</td><td>{{ item.nomeFuncionario }}</td><td>{{ item.valor | currency:'BRL' }}</td>
+        <td><p-button icon="pi pi-trash" styleClass="p-button-danger p-button-text" (click)="removerServico(i)"></p-button></td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage"><tr><td colspan="4">Nenhum serviço adicionado.</td></tr></ng-template>
+  </p-table>
+
+  <p-table [value]="itensPecaAdicionados" styleClass="p-datatable-sm mt-4" [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="caption">Peças Adicionadas</ng-template>
+    <ng-template pTemplate="header">
+      <tr><th>Descrição</th><th>Qtd.</th><th>Valor Unit.</th><th>Valor Total</th><th>Ação</th></tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-i="rowIndex">
+      <tr>
+        <td>{{ item.descricaoPeca }}</td><td>{{ item.quantidade }}</td><td>{{ item.valorUnitario | currency:'BRL' }}</td>
+        <td>{{ item.valorTotal | currency:'BRL' }}</td>
+        <td><p-button icon="pi pi-trash" styleClass="p-button-danger p-button-text" (click)="removerPeca(i)"></p-button></td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage"><tr><td colspan="5">Nenhuma peça adicionada.</td></tr></ng-template>
+  </p-table>
+  
+  <div class="d-flex justify-content-end align-items-center mt-3">
+    <h3>Valor Total: 
+      <p-tag styleClass="ms-2" severity="success" [value]="(valorTotalOS | currency:'BRL') ?? ''" [rounded]="true"></p-tag>
+    </h3>
+  </div>
+  
+  <div class="mt-4">
+    <p-button label="Criar Ordem de Serviço" icon="pi pi-check" styleClass="p-button-success p-button-lg me-2" 
+              (click)="salvarOS()"></p-button>
+    <p-button label="Cancelar" icon="pi pi-times" styleClass="p-button-secondary p-button-lg" 
+              routerLink="/os-list"></p-button>
+  </div>
+</div>

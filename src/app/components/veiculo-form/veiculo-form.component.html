@@ -1,0 +1,47 @@
+<div class="container mt-4">
+    <h2>{{ isEditMode ? 'Editar Veículo' : 'Novo Veículo' }}</h2>
+    <hr>
+  
+    <form [formGroup]="form" (ngSubmit)="salvar()">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="marca" class="form-label">Marca</label>
+          <input type="text" class="form-control" id="marca" formControlName="marca">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="modelo" class="form-label">Modelo</label>
+          <input type="text" class="form-control" id="modelo" formControlName="modelo">
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-4 mb-3">
+              <label for="placa" class="form-label">Placa</label>
+              <input type="text" class="form-control" id="placa" formControlName="placa">
+            </div>
+        <div class="col-md-4 mb-3">
+          <label for="ano" class="form-label">Ano</label>
+          <input type="number" class="form-control" id="ano" formControlName="ano">
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="quilometragem" class="form-label">Quilometragem</label>
+          <input type="number" class="form-control" id="quilometragem" formControlName="quilometragem">
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="proprietario" class="form-label">Proprietário</label>
+        <select class="form-select" id="proprietario" formControlName="idProprietario">
+          <option [ngValue]="null" disabled>Selecione um proprietário...</option>
+          <option *ngFor="let cliente of clientes" [value]="cliente.id">
+            {{ cliente.nome }} (CPF: {{ cliente.cpf }})
+          </option>
+        </select>
+      </div>
+  
+      <div class="mt-4">
+        <button type="submit" class="btn btn-success me-2" [disabled]="form.invalid">
+          {{ isEditMode ? 'Atualizar' : 'Cadastrar' }}
+        </button>
+        <a routerLink="/veiculo-list" class="btn btn-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>

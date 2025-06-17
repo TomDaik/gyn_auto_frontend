@@ -1,1 +1,60 @@
-<p>os-list works!</p>
+<div class="container mt-4">
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <h2 class="m-0">Ordens de Serviço</h2>
+    </div>
+    <div class="p-toolbar-group-end">
+      <p-button label="Nova Ordem de Serviço" icon="pi pi-plus" (click)="novaOS()"></p-button>
+    </div>
+  </p-toolbar>
+
+  <p-card class="mt-4">
+    <p-table [value]="ordensDeServico" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+             currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+             [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-striped p-datatable-sm">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">Nº OS <p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="cliente.nome">Cliente <p-sortIcon field="cliente.nome"></p-sortIcon></th>
+          <th>Veículo (Placa)</th>
+          <th pSortableColumn="dataAbertura">Data Abertura <p-sortIcon field="dataAbertura"></p-sortIcon></th>
+          <th>Status</th>
+          <th pSortableColumn="valorTotal">Valor Total <p-sortIcon field="valorTotal"></p-sortIcon></th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-os>
+        <tr>
+          <td>#{{ os.id }}</td>
+          <td>{{ os.cliente.nome }}</td>
+          <td>{{ os.veiculo.placa }}</td>
+          <td>{{ os.dataAbertura | date:'dd/MM/yyyy' }}</td>
+          <td>
+            <p-tag [severity]="getSeverity(os.status)" [value]="os.status.replace('_', ' ')"></p-tag>
+          </td>
+          <td>{{ os.valorTotal | currency:'BRL' }}</td>
+          <td>
+            <ng-container *ngIf="os.status === 'EM_ABERTO'">
+              <p-button icon="pi pi-pencil" styleClass="p-button-text p-button-info" 
+                        (click)="editarOS(os.id)" pTooltip="Editar OS" tooltipPosition="top"></p-button>
+
+              <p-button icon="pi pi-check" styleClass="p-button-text p-button-success" 
+                        (click)="finalizarOS(os.id)" pTooltip="Finalizar e Marcar como Paga" tooltipPosition="top"></p-button>
+
+              <p-button icon="pi pi-times" styleClass="p-button-text p-button-warning" 
+                        (click)="cancelarOS(os.id)" pTooltip="Cancelar OS" tooltipPosition="top"></p-button>
+            </ng-container>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">Nenhuma Ordem de Serviço encontrada.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>
