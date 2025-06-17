@@ -1,0 +1,29 @@
+<div class="main-container">
+  
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3 class="logo">
+          <i class="pi pi-car" style="font-size: 1.5rem; vertical-align: middle;"></i>
+          <span style="vertical-align: middle; margin-left: 10px;">AutoGyn</span>
+        </h3>
+      </div>
+      <p-panelMenu [model]="menuItems" [style]="{'width':'100%'}"></p-panelMenu>
+    </aside>
+  
+    <main class="main-content">
+      <p-toolbar>
+        <div class="p-toolbar-group-start">
+          <p-button icon="pi pi-bars" styleClass="p-button-text"></p-button>
+          <h4>AutoGyn</h4>
+        </div>
+        <div class="p-toolbar-group-end">
+          <p-button icon="pi pi-user" styleClass="p-button-rounded p-button-secondary p-button-text"></p-button>
+        </div>
+      </p-toolbar>
+  
+      <div class="content-area">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  
+  </div>

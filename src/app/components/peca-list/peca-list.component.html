@@ -1,1 +1,51 @@
-<p>peca-list works!</p>
+<div class="container mt-4">
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <h2 class="m-0">Lista de Peças</h2>
+    </div>
+    <div class="p-toolbar-group-end">
+      <p-button label="Nova Peça" icon="pi pi-plus" routerLink="/peca-form"></p-button>
+    </div>
+  </p-toolbar>
+
+  <p-card class="mt-4">
+    <p-table [value]="pecas" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+             currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+             [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-striped p-datatable-sm">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="codigo">Código <p-sortIcon field="codigo"></p-sortIcon></th>
+          <th pSortableColumn="descricao">Descrição <p-sortIcon field="descricao"></p-sortIcon></th>
+          <th pSortableColumn="quantidade">Estoque <p-sortIcon field="quantidade"></p-sortIcon></th>
+          <th pSortableColumn="valorUnitario">Valor Unit. <p-sortIcon field="valorUnitario"></p-sortIcon></th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-peca>
+        <tr>
+          <td>{{ peca.id }}</td>
+          <td>{{ peca.codigo }}</td>
+          <td>{{ peca.descricao }}</td>
+          <td>{{ peca.quantidade }}</td>
+          <td>{{ peca.valorUnitario | currency:'BRL' }}</td>
+          <td>
+            <p-button icon="pi pi-pencil" styleClass="p-button-text p-button-info" 
+                      (click)="editarPeca(peca.id)" pTooltip="Editar Peça" tooltipPosition="top"></p-button>
+
+            <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger" 
+                      (click)="excluirPeca(peca.id)" pTooltip="Excluir Peça" tooltipPosition="top"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6">Nenhuma peça encontrada.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

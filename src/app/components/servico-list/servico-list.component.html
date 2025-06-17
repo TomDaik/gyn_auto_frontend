@@ -1,1 +1,47 @@
-<p>servico-list works!</p>
+<div class="container mt-4">
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <h2 class="m-0">Lista de Serviços</h2>
+    </div>
+    <div class="p-toolbar-group-end">
+      <p-button label="Novo Serviço" icon="pi pi-plus" routerLink="/servico-form"></p-button>
+    </div>
+  </p-toolbar>
+
+  <p-card class="mt-4">
+    <p-table [value]="servicos" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+             currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+             [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-striped p-datatable-sm">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
+          <th pSortableColumn="descricao">Descrição <p-sortIcon field="descricao"></p-sortIcon></th>
+          <th pSortableColumn="valorUnitario">Valor Unitário <p-sortIcon field="valorUnitario"></p-sortIcon></th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-servico>
+        <tr>
+          <td>{{ servico.id }}</td>
+          <td>{{ servico.descricao }}</td>
+          <td>{{ servico.valorUnitario | currency:'BRL' }}</td>
+          <td>
+            <p-button icon="pi pi-pencil" styleClass="p-button-text p-button-info" 
+                      (click)="editarServico(servico.id)" pTooltip="Editar Serviço" tooltipPosition="top"></p-button>
+
+            <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger" 
+                      (click)="excluirServico(servico.id)" pTooltip="Excluir Serviço" tooltipPosition="top"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4">Nenhum serviço encontrado.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

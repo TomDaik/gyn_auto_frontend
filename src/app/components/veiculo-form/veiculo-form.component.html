@@ -1,0 +1,48 @@
+<p-card [header]="isEditMode ? 'Editar Veículo' : 'Novo Veículo'" styleClass="mt-4">
+  
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+    <div class="p-fluid grid">
+
+      <div class="field col-12 md:col-6">
+        <label for="marca">Marca</label>
+        <input id="marca" type="text" pInputText formControlName="marca" />
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="modelo">Modelo</label>
+        <input id="modelo" type="text" pInputText formControlName="modelo" />
+      </div>
+
+      <div class="field col-12 md:col-4">
+        <label for="placa">Placa</label>
+        <input id="placa" type="text" pInputText formControlName="placa" />
+      </div>
+      <div class="field col-12 md:col-4">
+        <label for="ano">Ano</label>
+        <p-inputNumber inputId="ano" formControlName="ano" [useGrouping]="false"></p-inputNumber>
+      </div>
+      <div class="field col-12 md:col-4">
+        <label for="quilometragem">Quilometragem</label>
+        <p-inputNumber inputId="quilometragem" formControlName="quilometragem"></p-inputNumber>
+      </div>
+
+      <div class="field col-12">
+        <label for="proprietario">Proprietário</label>
+        <p-dropdown id="proprietario" 
+                    [options]="clientes" 
+                    formControlName="idProprietario"
+                    optionLabel="nome" 
+                    optionValue="id"
+                    placeholder="Selecione um proprietário..."
+                    [showClear]="true" 
+                    [filter]="true" 
+                    filterBy="nome,cpf"></p-dropdown>
+      </div>
+    </div>
+
+    <div class="mt-4 flex justify-content-end">
+      <p-button label="Cancelar" styleClass="p-button-secondary" routerLink="/veiculo-list" class="mr-2"></p-button>
+      <p-button [label]="isEditMode ? 'Atualizar' : 'Cadastrar'" type="submit" [disabled]="form.invalid"></p-button>
+    </div>
+
+  </form>
+</p-card>

@@ -1,0 +1,24 @@
+<p-card [header]="isEditMode ? 'Editar Serviço' : 'Novo Serviço'" styleClass="mt-4">
+  
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+    <div class="p-fluid grid">
+
+      <div class="field col-12">
+        <label for="descricao">Descrição do Serviço</label>
+        <textarea id="descricao" rows="3" pInputTextarea formControlName="descricao"></textarea>
+      </div>
+  
+      <div class="field col-12">
+        <label for="valorUnitario">Valor Unitário (R$)</label>
+        <p-inputNumber inputId="valorUnitario" formControlName="valorUnitario" mode="currency" currency="BRL" locale="pt-BR"></p-inputNumber>
+      </div>
+
+    </div>
+
+    <div class="mt-4 flex justify-content-end">
+      <p-button label="Cancelar" styleClass="p-button-secondary" routerLink="/servico-list" class="mr-2"></p-button>
+      <p-button [label]="isEditMode ? 'Atualizar' : 'Cadastrar'" type="submit" [disabled]="form.invalid"></p-button>
+    </div>
+  </form>
+
+</p-card>

@@ -1,1 +1,53 @@
-<p>veiculo-list works!</p>
+<div class="container mt-4">
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <h2 class="m-0">Lista de Veículos</h2>
+    </div>
+    <div class="p-toolbar-group-end">
+      <p-button label="Novo Veículo" icon="pi pi-plus" routerLink="/veiculo-form"></p-button>
+    </div>
+  </p-toolbar>
+
+  <p-card class="mt-4">
+    <p-table [value]="veiculos" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+             currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+             [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-striped p-datatable-sm">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="idVeiculo">ID <p-sortIcon field="idVeiculo"></p-sortIcon></th>
+          <th pSortableColumn="placa">Placa <p-sortIcon field="placa"></p-sortIcon></th>
+          <th pSortableColumn="marca">Marca <p-sortIcon field="marca"></p-sortIcon></th>
+          <th pSortableColumn="modelo">Modelo <p-sortIcon field="modelo"></p-sortIcon></th>
+          <th pSortableColumn="ano">Ano <p-sortIcon field="ano"></p-sortIcon></th>
+          <th pSortableColumn="proprietario.nome">Proprietário <p-sortIcon field="proprietario.nome"></p-sortIcon></th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-veiculo>
+        <tr>
+          <td>{{ veiculo.idVeiculo }}</td>
+          <td>{{ veiculo.placa }}</td>
+          <td>{{ veiculo.marca }}</td>
+          <td>{{ veiculo.modelo }}</td>
+          <td>{{ veiculo.ano }}</td>
+          <td>{{ veiculo.proprietario.nome }}</td>
+          <td>
+            <p-button icon="pi pi-pencil" styleClass="p-button-text p-button-info" 
+                      (click)="editarVeiculo(veiculo.idVeiculo)" pTooltip="Editar Veículo" tooltipPosition="top"></p-button>
+
+            <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger" 
+                      (click)="excluirVeiculo(veiculo.idVeiculo)" pTooltip="Excluir Veículo" tooltipPosition="top"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">Nenhum veículo encontrado.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>
