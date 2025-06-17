@@ -1,28 +1,32 @@
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center">
-      <h2>Lista de Veículos</h2>
-      <a routerLink="/veiculo-form" class="btn btn-primary">Novo Veículo</a>
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <h2 class="m-0">Lista de Veículos</h2>
     </div>
-    <hr>
-  
-    <div *ngIf="veiculos.length === 0" class="alert alert-info">
-      Nenhum veículo encontrado ou carregando...
+    <div class="p-toolbar-group-end">
+      <p-button label="Novo Veículo" icon="pi pi-plus" routerLink="/veiculo-form"></p-button>
     </div>
-  
-    <table *ngIf="veiculos.length > 0" class="table table-striped table-hover">
-      <thead>
+  </p-toolbar>
+
+  <p-card class="mt-4">
+    <p-table [value]="veiculos" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+             currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+             [rowsPerPageOptions]="[10, 25, 50]" styleClass="p-datatable-striped p-datatable-sm">
+      
+      <ng-template pTemplate="header">
         <tr>
-          <th>ID</th>
-          <th>Placa</th>
-          <th>Marca</th>
-          <th>Modelo</th>
-          <th>Ano</th>
-          <th>Proprietário</th>
+          <th pSortableColumn="idVeiculo">ID <p-sortIcon field="idVeiculo"></p-sortIcon></th>
+          <th pSortableColumn="placa">Placa <p-sortIcon field="placa"></p-sortIcon></th>
+          <th pSortableColumn="marca">Marca <p-sortIcon field="marca"></p-sortIcon></th>
+          <th pSortableColumn="modelo">Modelo <p-sortIcon field="modelo"></p-sortIcon></th>
+          <th pSortableColumn="ano">Ano <p-sortIcon field="ano"></p-sortIcon></th>
+          <th pSortableColumn="proprietario.nome">Proprietário <p-sortIcon field="proprietario.nome"></p-sortIcon></th>
           <th>Ações</th>
         </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let veiculo of veiculos">
+      </ng-template>
+
+      <ng-template pTemplate="body" let-veiculo>
+        <tr>
           <td>{{ veiculo.idVeiculo }}</td>
           <td>{{ veiculo.placa }}</td>
           <td>{{ veiculo.marca }}</td>
@@ -30,10 +34,20 @@
           <td>{{ veiculo.ano }}</td>
           <td>{{ veiculo.proprietario.nome }}</td>
           <td>
-            <button (click)="editarVeiculo(veiculo.idVeiculo)" class="btn btn-sm btn-outline-secondary me-2">Editar</button>
-            <button (click)="excluirVeiculo(veiculo.idVeiculo)" class="btn btn-sm btn-outline-danger">Excluir</button>
+            <p-button icon="pi pi-pencil" styleClass="p-button-text p-button-info" 
+                      (click)="editarVeiculo(veiculo.idVeiculo)" pTooltip="Editar Veículo" tooltipPosition="top"></p-button>
+
+            <p-button icon="pi pi-trash" styleClass="p-button-text p-button-danger" 
+                      (click)="excluirVeiculo(veiculo.idVeiculo)" pTooltip="Excluir Veículo" tooltipPosition="top"></p-button>
           </td>
         </tr>
-      </tbody>
-    </table>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">Nenhum veículo encontrado.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
 </div>

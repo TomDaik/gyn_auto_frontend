@@ -8,10 +8,25 @@ import { VeiculoCreateDTO } from '../../models/veiculo-create.dto';
 import { Cliente } from '../../models/cliente.model';
 import { ClienteService } from '../../services/cliente.service';
 
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+
 @Component({
   selector: 'app-veiculo-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    CardModule,
+    InputTextModule,
+    InputNumberModule,
+    ButtonModule,
+    DropdownModule
+  ],
   templateUrl: './veiculo-form.component.html',
   styleUrls: ['./veiculo-form.component.css']
 })

@@ -4,10 +4,24 @@ import { Router, RouterModule } from '@angular/router';
 import { Veiculo } from '../../models/veiculo.model';
 import { VeiculoService } from '../../services/veiculo.service';
 
+import { CardModule } from 'primeng/card';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TooltipModule } from 'primeng/tooltip';
+
 @Component({
   selector: 'app-veiculo-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    CardModule,
+    TableModule,
+    ButtonModule,
+    ToolbarModule,
+    TooltipModule
+  ],
   templateUrl: './veiculo-list.component.html',
   styleUrls: ['./veiculo-list.component.css']
 })

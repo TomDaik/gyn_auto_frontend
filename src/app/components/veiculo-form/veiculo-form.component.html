@@ -1,47 +1,48 @@
-<div class="container mt-4">
-    <h2>{{ isEditMode ? 'Editar Veículo' : 'Novo Veículo' }}</h2>
-    <hr>
+<p-card [header]="isEditMode ? 'Editar Veículo' : 'Novo Veículo'" styleClass="mt-4">
   
-    <form [formGroup]="form" (ngSubmit)="salvar()">
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label for="marca" class="form-label">Marca</label>
-          <input type="text" class="form-control" id="marca" formControlName="marca">
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="modelo" class="form-label">Modelo</label>
-          <input type="text" class="form-control" id="modelo" formControlName="modelo">
-        </div>
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+    <div class="p-fluid grid">
+
+      <div class="field col-12 md:col-6">
+        <label for="marca">Marca</label>
+        <input id="marca" type="text" pInputText formControlName="marca" />
       </div>
-      <div class="row">
-          <div class="col-md-4 mb-3">
-              <label for="placa" class="form-label">Placa</label>
-              <input type="text" class="form-control" id="placa" formControlName="placa">
-            </div>
-        <div class="col-md-4 mb-3">
-          <label for="ano" class="form-label">Ano</label>
-          <input type="number" class="form-control" id="ano" formControlName="ano">
-        </div>
-        <div class="col-md-4 mb-3">
-          <label for="quilometragem" class="form-label">Quilometragem</label>
-          <input type="number" class="form-control" id="quilometragem" formControlName="quilometragem">
-        </div>
+      <div class="field col-12 md:col-6">
+        <label for="modelo">Modelo</label>
+        <input id="modelo" type="text" pInputText formControlName="modelo" />
       </div>
-      <div class="mb-3">
-        <label for="proprietario" class="form-label">Proprietário</label>
-        <select class="form-select" id="proprietario" formControlName="idProprietario">
-          <option [ngValue]="null" disabled>Selecione um proprietário...</option>
-          <option *ngFor="let cliente of clientes" [value]="cliente.id">
-            {{ cliente.nome }} (CPF: {{ cliente.cpf }})
-          </option>
-        </select>
+
+      <div class="field col-12 md:col-4">
+        <label for="placa">Placa</label>
+        <input id="placa" type="text" pInputText formControlName="placa" />
       </div>
-  
-      <div class="mt-4">
-        <button type="submit" class="btn btn-success me-2" [disabled]="form.invalid">
-          {{ isEditMode ? 'Atualizar' : 'Cadastrar' }}
-        </button>
-        <a routerLink="/veiculo-list" class="btn btn-secondary">Cancelar</a>
+      <div class="field col-12 md:col-4">
+        <label for="ano">Ano</label>
+        <p-inputNumber inputId="ano" formControlName="ano" [useGrouping]="false"></p-inputNumber>
       </div>
-    </form>
-  </div>
+      <div class="field col-12 md:col-4">
+        <label for="quilometragem">Quilometragem</label>
+        <p-inputNumber inputId="quilometragem" formControlName="quilometragem"></p-inputNumber>
+      </div>
+
+      <div class="field col-12">
+        <label for="proprietario">Proprietário</label>
+        <p-dropdown id="proprietario" 
+                    [options]="clientes" 
+                    formControlName="idProprietario"
+                    optionLabel="nome" 
+                    optionValue="id"
+                    placeholder="Selecione um proprietário..."
+                    [showClear]="true" 
+                    [filter]="true" 
+                    filterBy="nome,cpf"></p-dropdown>
+      </div>
+    </div>
+
+    <div class="mt-4 flex justify-content-end">
+      <p-button label="Cancelar" styleClass="p-button-secondary" routerLink="/veiculo-list" class="mr-2"></p-button>
+      <p-button [label]="isEditMode ? 'Atualizar' : 'Cadastrar'" type="submit" [disabled]="form.invalid"></p-button>
+    </div>
+
+  </form>
+</p-card>

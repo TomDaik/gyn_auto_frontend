@@ -4,10 +4,24 @@ import { Router, RouterModule } from '@angular/router';
 import { Servico } from '../../models/servico.model';
 import { ServicoService } from '../../services/servico.service';
 
+import { CardModule } from 'primeng/card';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TooltipModule } from 'primeng/tooltip';
+
 @Component({
   selector: 'app-servico-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    CardModule,
+    TableModule,
+    ButtonModule,
+    ToolbarModule,
+    TooltipModule
+    ],
   templateUrl: './servico-list.component.html',
   styleUrls: ['./servico-list.component.css']
 })

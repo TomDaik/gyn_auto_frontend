@@ -6,10 +6,24 @@ import { Observable } from 'rxjs';
 import { ServicoService } from '../../services/servico.service';
 import { ServicoCreateDTO } from '../../models/servico-create.dto';
 
+import { CardModule } from 'primeng/card';
+import { InputTextarea } from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ButtonModule } from 'primeng/button';
+
 @Component({
   selector: 'app-servico-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    RouterModule,
+    CardModule,
+    InputTextarea,
+    InputNumberModule,
+    ButtonModule
+  ],
   templateUrl: './servico-form.component.html',
   styleUrls: ['./servico-form.component.css']
 })
